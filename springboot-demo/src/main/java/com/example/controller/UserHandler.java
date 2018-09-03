@@ -5,6 +5,7 @@ import com.example.client.UserClient;
 import com.example.entity.User;
 import com.example.proto.URI;
 import com.example.service.UserService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +16,12 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -83,16 +83,15 @@ public class UserHandler {
     public User updateByProxy(User user) throws Exception {
         logger.info("update:"+user);
         Assert.notNull(user.getId(), "Assert is null");
-//        ObjectMapper mapper = new ObjectMapper();
-//        Map map = mapper.readValue(mapper.writeValueAsString(user), Map.class);
-//        userClient.update(map);
-        return userClient.update(user);
+        ObjectMapper mapper = new ObjectMapper();
+        Map map = mapper.readValue(mapper.writeValueAsString(user), Map.class);
+        return userClient.update2(map);
     }
 
-    @RequestMapping(name = URI.SMCU_USER_UPDATE_BY_JSON,method = RequestMethod.POST)
-    public User updateByJson(@RequestBody User user){
-        logger.info("update:"+user);
-        Assert.notNull(user.getId(), "Assert is null");
-        return userService.update(user);
-    }
+//    @RequestMapping(name = URI.SMCU_USER_UPDATE_BY_JSON,method = RequestMethod.POST)
+//    public User updateByJson(@RequestBody User user){
+//        logger.info("update:"+user);
+//        Assert.notNull(user.getId(), "Assert is null");
+//        return userService.update(user);
+//    }
 }

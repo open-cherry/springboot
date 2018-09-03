@@ -33,9 +33,9 @@ public interface UserClient {
     @GetMapping(value = "/smcu/user/get?id={id}")
     User getUser(@PathVariable("id") Long id);
 
-    @PostMapping(value = URI.SMCU_USER_UPDATE_BY_JSON,consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = URI.SMCU_USER_UPDATE_BY_JSON)
     User update(User user);
 
-    @PostMapping(value = URI.SMCU_USER_UPDATE,consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE,produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
-    User update(Map<String,?> user);
+    @PostMapping(value = URI.SMCU_USER_UPDATE,consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    User update2(Map<String,?> user2);
 }
